@@ -1,0 +1,5 @@
+;; this specify which events we want to listen to and notify then.
+{:github-events [
+             ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
+               {:full-repo-name "MalloZup/fullrocketmetal" :events["public"]}
+]}
