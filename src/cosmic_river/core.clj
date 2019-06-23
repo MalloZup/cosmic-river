@@ -15,9 +15,11 @@
   (tentacles.events/repo-events)
 )
 
-(defn dispatch-events [github-events]
+(defn dispatch-events []
 ;; based on the type of event, call the right function
 ;; e.g if repo call the repo function
-  (->> (first github-events)
-        (println ))
+  (-> (get-all-events)
+;; select only repository events list  (we can listen multiple repos
+        (get-in  ,,, [:repository-events])  
+        (println ,,,))
 )

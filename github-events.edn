@@ -2,18 +2,25 @@
 
 ;; public is in GitHub terminology what is not private.
 
-{:github-events [
+{:github-events { 
              ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
              ;; https://developer.github.com/v3/activity/events/
 
              ;; this events are targeting a repository. there are others for user/orgs which are interesting too. (later)
-             {:full-repo-name "MalloZup/fullrocketmetal" :events["repository", "issue"]},
-             {:full-repo-name "MalloZup/missile" :events["repository"]},
+             :repository-events [
+               {:full-repo-name "MalloZup/fullrocketmetal" :events["repository", "issue"]},
+               {:full-repo-name "MalloZup/missile" :events["repository"]},
+             ],
 
+             ;; implement this later on
              ;; user events
-             ;; user-full contains also the private and public events
+             :user-events [
+             ;; user-full contains also the private and public events  (need authentication
              ;; public contains only public events
-             {:user "MalloZup" :events["user-full"]},
+               {:user "MalloZup" :events["user-full"]},
+             ],
+             :organisation-events [
              ;; organisation public events
              {:organisation "openSUSE" :events["org"]},
-]}
+             ]
+}}
