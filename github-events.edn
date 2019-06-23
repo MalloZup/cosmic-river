@@ -1,5 +1,19 @@
 ;; this specify which events we want to listen to and notify then.
+
+;; public is in GitHub terminology what is not private.
+
 {:github-events [
              ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
-               {:full-repo-name "MalloZup/fullrocketmetal" :events["public"]}
+             ;; https://developer.github.com/v3/activity/events/
+
+             ;; this events are targeting a repository. there are others for user/orgs which are interesting too. (later)
+             {:full-repo-name "MalloZup/fullrocketmetal" :events["repository", "issue"]},
+             {:full-repo-name "MalloZup/missile" :events["repository"]},
+
+             ;; user events
+             ;; user-full contains also the private and public events
+             ;; public contains only public events
+             {:user "MalloZup" :events["user-full"]},
+             ;; organisation public events
+             {:organisation "openSUSE" :events["org"]},
 ]}

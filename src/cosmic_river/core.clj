@@ -1,7 +1,6 @@
 (ns cosmic-river.core
-  (:require [tentacles.core]
-            [tentacles.events]
-            [tentacles.repos])
+  (:require 
+            [tentacles.events])
   (:gen-class))
 
 
@@ -11,6 +10,14 @@
 (defn get-all-events []
   (get-in (github-events) [:github-events]))
 
-(defn get-repo-public-events [user repo]
+;; TODO: use conditional request to don't get always same events
+(defn get-repo-events [user repo]
   (tentacles.events/repo-events)
+)
+
+(defn dispatch-events [github-events]
+;; based on the type of event, call the right function
+;; e.g if repo call the repo function
+  (->> (first github-events)
+        (println ))
 )
