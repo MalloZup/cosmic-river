@@ -2,6 +2,7 @@
   (:require 
    [tentacles.events]
    [tentacles.core]
+   [cosmic-river.rabbitmq :as rabbitmq]
    [clojure.string :as str])
            (:gen-class))
 
@@ -44,17 +45,19 @@
   "dispatch only repository events"
   (doseq [repo-entry (get-config-repo-events)] 
     (doseq [event (:events repo-entry)]  
-      (when (= "repository" (clojure.string/lower-case event)) 
+      (when (= "repository" (str/lower-case event)) 
         ;; do things with only repo events
         (get-repo-events (:full-repo-name repo-entry) event))  
-      (when (= "issue" (clojure.string/lower-case event))
+      (when (= "issue" (str/lower-case event))
         ;; do things with issue events of repository
         (println "do issue stuff")))))
   
 
 (defn -main []
    ;; it should be easy to add other dispatcher which are executed in parallel.
-   (dispatch-all-repo-events)
+   ;; (dispatch-all-repo-events)
+   ;; TODO: THIS IS here only for convenience
+   (rabbitmq/start)
 )
 
 (defn daemonize []
