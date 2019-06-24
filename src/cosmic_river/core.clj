@@ -14,18 +14,17 @@
 ;; we need this so we can fetch only events when e-tag change
 (def etag-cache (atom {}))
 
-(defn criver-config []
+(defn edn-config []
   (clojure.edn/read-string (slurp "criver-config.edn")))
 
-(defn get-all-events []
-  (get-in (criver-config) [:github-events]))
+(defn get-criver-config []
+  (get-in (edn-config) [:criver-config]))
 
 (defn get-config-repo-events []
   "read config and get only repository events"
-  (get-in  (get-all-events) [:repository-events]))
+  (get-in  (get-criver-config) [:repository-events]))
 
-;; TODO: in case 90 days have passed, the repo/events return a nil.
-;; Research if this is problematic or not
+;; TODO: if 90 days have passed, the repo/events return a nil. Research if this is problematic or not
 (defn get-repo-events [full-repo-name event]
   "read from GitHub api v3 the repo events"
   (let [github-user (first (str/split full-repo-name #"/"))
@@ -40,7 +39,6 @@
       (swap! etag-cache merge { uid-etag 
                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))}))))  
 
-
 (defn dispatch-all-repo-events []
   "dispatch only repository events"
   (doseq [repo-entry (get-config-repo-events)] 
@@ -53,13 +51,22 @@
         (println "do issue stuff")))))
   
 
+(defn dispatch-message-broker []
+  (let [mb (get-in (get-criver-config) [:message-broker])]
+    (when = (:type mb) "rabbitmq")
+     (rabbitmq/start) 
+     ;; kafka ..
+  ))
+
+
 (defn -main []
    ;; it should be easy to add other dispatcher which are executed in parallel.
-   ;; (dispatch-all-repo-events)
-   ;; TODO: THIS IS here only for convenience
-   (rabbitmq/start)
+  ;;  (dispatch-all-repo-events)
+   ;; TODO: THIS IS here only for convenience, it should be either before or in other func
+   
+   (dispatch-message-broker)
 )
-
+;; TODO: we should read events every timeout 5 timeout time
 (defn daemonize []
   (while true
       (let [interval (* 5 60 1000)] 
