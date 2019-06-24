@@ -7,11 +7,12 @@
              ;; https://developer.github.com/v3/activity/events/
 
              ;; this events are targeting a repository. there are others for user/orgs which are interesting too. (later)
-             :repository-events [
-               {:full-repo-name "MalloZup/fullrocketmetal" :events["repository", "issue"]},
+             :repository-events [{:full-repo-name "MalloZup/fullrocketmetal" :events["repository", "issue"]},
                {:full-repo-name "MalloZup/missile" :events["repository"]},
+               {:full-repo-name "MalloZup/kubeojo" :events["repository"]},
              ],
-
+             
+             ;; THIS IS NOT implemented
              ;; implement this later on
              ;; user events
              :user-events [
