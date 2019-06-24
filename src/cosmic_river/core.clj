@@ -9,7 +9,6 @@
 ;; TODO: remember that (from: https://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository)
 ;; Only events created within the past 90 days will be included in timelines. Events older than 90 days will not be included (even if the total number of events in the timeline is less than 300).
 
-
 ;; this will contain all different repository/events (uid) e-tag.
 ;; we need this so we can fetch only events when e-tag change
 (def etag-cache (atom {}))
@@ -20,12 +19,9 @@
 (defn get-all-events []
   (get-in (criver-config) [:github-events]))
 
-
 (defn get-config-repo-events []
   "read config and get only repository events"
-  (-> (get-all-events)
-      (get-in  ,,, [:repository-events])))
-
+  (get-in  (get-all-events) [:repository-events]))
 
 ;; TODO: in case 90 days have passed, the repo/events return a nil.
 ;; Research if this is problematic or not
