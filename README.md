@@ -7,11 +7,6 @@ Listen to GitHub V3 events and dispatch them via a message-broker of choice.
 See if a repo release and trigger event ( chat, etc)
 
 (server-side): 
-: Implement listen of a repository event
-
-- Implement conditional request for event
-- Add this to a main dispatch which is daemonized
-
 - implement message broker functionalities
 
 (client-side)

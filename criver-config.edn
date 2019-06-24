@@ -6,13 +6,14 @@
              ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
              ;; https://developer.github.com/v3/activity/events/
 
+             ;; TODO: issue event of repository isn't implemented
              ;; this events are targeting a repository. there are others for user/orgs which are interesting too. (later)
              :repository-events [{:full-repo-name "MalloZup/fullrocketmetal" :events["repository", "issue"]},
                {:full-repo-name "MalloZup/missile" :events["repository"]},
-               {:full-repo-name "MalloZup/kubeojo" :events["repository"]},
+               {:full-repo-name "MalloZup/kubeojo" :events["repository"]}, 
              ],
              
-             ;; THIS IS NOT implemented
+             ;; TODO: THIS IS NOT implemented
              ;; implement this later on
              ;; user events
              :user-events [
@@ -25,3 +26,8 @@
              {:organisation "openSUSE" :events["org"]},
              ]
 }}
+
+
+;; message broker: choose a message broker to interface with cosmic-river
+;; choices: rabbitmq,
+{:message-broker {}}
