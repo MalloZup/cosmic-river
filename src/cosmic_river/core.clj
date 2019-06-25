@@ -63,7 +63,6 @@
    ;; it should be easy to add other dispatcher which are executed in parallel.
   ;;  (dispatch-all-repo-events)
    ;; TODO: THIS IS here only for convenience, it should be either before or in other func
-   
    (dispatch-message-broker)
 )
 ;; TODO: we should read events every timeout 5 timeout time
