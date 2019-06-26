@@ -11,7 +11,6 @@
 
 (defn rabbitmq-consumers [] (get-in (client-edn-config) [:rabbitmq-consumers]))
 
-
 (defn start-consumers  []
   "Starts a consumer bound to the given topic exchange in a separate thread"
  

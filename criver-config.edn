@@ -28,5 +28,7 @@
              ]
 
             ;; rabbitmq or kafka
-            :message-broker {:type "rabbitmq"}
+            :message-broker {:type "rabbitmq" :config { 
+                                                       :exchange-name "branzino"}
+                                                      }
 }}

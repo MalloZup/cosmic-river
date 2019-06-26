@@ -24,7 +24,13 @@
   "read config and get only repository events"
   (get-in  (get-criver-config) [:repository-events]))
 
-;; TODO: if 90 days have passed, the repo/events return a nil. Research if this is problematic or not
+;; publish an event.
+(defn message-broker-publish [event]
+  (let [mb (get-in (get-criver-config) [:message-broker])]
+    (when = (:type mb) "rabbitmq")
+     (println event)
+))
+
 (defn get-repo-events [full-repo-name event]
   "read from GitHub api v3 the repo events"
   (let [github-user (first (str/split full-repo-name #"/"))
@@ -35,9 +41,12 @@
     ;;etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
       ;; TODO: this will use messagebroker to send this events
-      (println (tentacles.events/repo-events github-user github-repo)) 
+      (message-broker-publish (tentacles.events/repo-events github-user github-repo))
+       
       (swap! etag-cache merge { uid-etag 
                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))}))))  
+
+
 
 (defn dispatch-all-repo-events []
   "dispatch only repository events"
@@ -51,21 +60,21 @@
         (println "do issue stuff")))))
   
 
-(defn dispatch-message-broker []
+(defn init-message-broker []
   (let [mb (get-in (get-criver-config) [:message-broker])]
     (when = (:type mb) "rabbitmq")
-     (rabbitmq/start) 
+     ;; TODO: it might be that we need more exchange-names, e.g by different types of events
+     (rabbitmq/init (get-in mb [:config, :exchange-name])) 
      ;; kafka ..
   ))
 
-
 (defn -main []
-   ;; it should be easy to add other dispatcher which are executed in parallel.
-  ;;  (dispatch-all-repo-events)
-   ;; TODO: THIS IS here only for convenience, it should be either before or in other func
-   (dispatch-message-broker)
+   (init-message-broker)
+    ;; it should be easy to add other dispatcher which are executed in parallel.
+   (dispatch-all-repo-events)
 )
-;; TODO: we should read events every timeout 5 timeout time
+
+;; TODO: add a reload and a timeout for recheking new events (by edn)
 (defn daemonize []
   (while true
       (let [interval (* 5 60 1000)] 
