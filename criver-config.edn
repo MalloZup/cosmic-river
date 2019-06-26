@@ -14,7 +14,7 @@
                {:full-repo-name "MalloZup/kubeojo" :events["repository"]}, 
              ],
              
-             ;; TODO: THIS IS NOT implemented
+             ;; -----  TODO: THIS IS NOT implemented ----------------
              ;; implement this later on
              ;; user events
              :user-events [
@@ -26,6 +26,7 @@
              ;; organisation public events
              {:organisation "openSUSE" :events["org"]},
              ]
+             ;; --------------------------------------------------------------
 
             ;; rabbitmq or kafka
             :message-broker {:type "rabbitmq" :config { 

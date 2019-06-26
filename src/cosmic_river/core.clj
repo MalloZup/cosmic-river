@@ -1,3 +1,4 @@
+
 (ns cosmic-river.core
   (:require 
    [tentacles.events]
@@ -24,11 +25,12 @@
   "read config and get only repository events"
   (get-in  (get-criver-config) [:repository-events]))
 
-;; publish an event.
+;;q publish an event.
 (defn message-broker-publish [event]
   (let [mb (get-in (get-criver-config) [:message-broker])]
     (when = (:type mb) "rabbitmq")
-     (println event)
+     (println "publishing to rabbitmq-event")
+     (rabbitmq/publish-event (get-in mb [:config, :exchange-name]) event)
 ))
 
 (defn get-repo-events [full-repo-name event]
@@ -41,11 +43,11 @@
     ;;etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
       ;; TODO: this will use messagebroker to send this events
+      (println "publishing rabbitmq event")
       (message-broker-publish (tentacles.events/repo-events github-user github-repo))
        
       (swap! etag-cache merge { uid-etag 
                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))}))))  
-
 
 
 (defn dispatch-all-repo-events []
@@ -65,7 +67,7 @@
     (when = (:type mb) "rabbitmq")
      ;; TODO: it might be that we need more exchange-names, e.g by different types of events
      (rabbitmq/init (get-in mb [:config, :exchange-name])) 
-     ;; kafka ..
+     ;; kafka ..)
   ))
 
 (defn -main []

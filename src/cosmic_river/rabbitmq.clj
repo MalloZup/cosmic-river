@@ -2,16 +2,17 @@
   (:require [langohr.core      :as rmq]
             [langohr.channel   :as lch]
             [langohr.exchange  :as le]
+            [cheshire.core :as json]
             [langohr.basic     :as lb]))
 
 ;; TODO: investigate if conn/connect can be called without any problems
 
-
-(defn publish [ex msg]
+;; http://clojurerabbitmq.info/articles/excqhanges.html#publishing-messages
+(defn publish-event [ex event]
   (let [conn  (rmq/connect)
         ch    (lch/open conn)]
     ;; start consumer before publish
-    (lb/publish ch ex "" msg {:content-type "text/plain" :type "github.repo"})
+    (lb/publish ch ex "" (json/generate-string event) {:content-type "application/json" :type "github.repo"})
     (rmq/close ch)
     (rmq/close conn)))
 

@@ -10,8 +10,8 @@
 
              ;; TODO: implement a filter based on the events. E.g if we have a whole repository events, we should 
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-             {:qe-name "branzi" :exchange-name "branzi" :shell-command "uptime"},
-             {:qe-name "branzi" :exchange-name "branzi" :shell-command "ls"},
+             {:qe-name "branzi" :exchange-name "branzino" :shell-command "uptime"},
+             {:qe-name "branzi" :exchange-name "branzino" :shell-command "ls"},
              ]
 
 }
