@@ -14,11 +14,11 @@
 ;; we need this so we can fetch only events when e-tag change
 (def etag-cache (atom {}))
 
-(defn edn-config []
+(defn server-edn-config []
   (clojure.edn/read-string (slurp "criver-config.edn")))
 
 (defn get-criver-config []
-  (get-in (edn-config) [:criver-config]))
+  (get-in (server-edn-config) [:criver-config]))
 
 (defn get-config-repo-events []
   "read config and get only repository events"
