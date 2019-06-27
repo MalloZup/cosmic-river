@@ -19,4 +19,4 @@
 (defn init [ex]
   (let [conn  (rmq/connect)
         ch    (lch/open conn)]
-    (le/declare ch ex "fanout" {:durable true :auto-delete true})))
+    (le/declare ch ex "fanout" {:durable false :auto-delete true})))

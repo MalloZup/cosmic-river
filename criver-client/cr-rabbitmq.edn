@@ -9,7 +9,7 @@
 
              ;; -- filter allow to filter events on type and other criteria
              
-             ;; below are listed the current criteria:
+             ;; below are listed the current criteqria:
 
              ;; --> type: specify which type you wish to filter. The types are the GitHub types see https://developer.github.com/v3/activity/events/types/
               
@@ -17,8 +17,8 @@
 
              ;; TODO: implement a filter based on the events. E.g if we have a whole repository events, we should 
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "branzi" :exchange-name "branzino" :shell-command "uptime" :filter {:type "CreateEvent"} },
-               {:qe-name "branzi" :exchange-name "branzino" :shell-command "ls"},
+               {:qe-name "branzina" :exchange-name "branzini" :shell-command "uptime" :filter {:type "CreateEvent"} },
+               {:qe-name "branzinb" :exchange-name "branzini" :shell-command "ls"},
              ]
 
 }

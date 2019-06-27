@@ -26,7 +26,7 @@
         ch    (lch/open conn)
         shell-command (:shell-command consumer)
         msg-handler  (fn [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
-                     (println (filter-events payload))
+ ;;                    (println (filter-events payload))
                      (println (:out (sh shell-command))))]
 
      
