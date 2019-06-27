@@ -3,7 +3,7 @@
 Minimalistic event-driven message oriented middleware  GitHub automation for bigger/small organisations or individuals
 
 - [Rationale](#rationale)
-- [quickstart](#quickstart)
+- [quickstart](doc/quickstart.md)
 - [Use-cases](#use-cases)
 - [Specification](doc/specification.md)
 
@@ -33,28 +33,31 @@ Note that by it's universality, cosmic-river has a huge variety of application. 
 As example consider this use-case:
 
 - Release automation:
- * consider https://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or a twitter message etc.
- * The slack/IRC notification is the application developers responsability to interface. (see the tutorial for more details)
-  
+ * consider https://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or perform other actions like building a package, test it, and other pipelines.
+
  * consider  the https://github.com/kubernetes/kubernetes publish a new release, cosmic-river can trigger automatically the needed automation for making a new package for your distro, testing it with your tool
 
-Other use-case are:
+- Testing, CI, Automation:
+ * consider you have Pull-Requests on some repos, cosmic-river can watch the events  and trigger the needed actions without using a polling mechanism
 
-`Testing-automaiton`, `infrastructure-as-code`, `Data-Sciences`, `Packaging`, `Social-Networking automation`, everything based on a GItHub event. etc
+- Event Notifications:
+ * get notified with your custom actions when some Event type happen on the watched repo
+
+- Team Metrics/Events:
+ * you could trigger specific actions/workflows, or simply gather data thanks to events
+
 
 # Architecture:
 
-Cosmic River is a lightweight Distributed application Server/Client model.
+Cosmic River is a lightweight Distributed application Server/Client model, and made to be composable. 
 
-The server application is composable as also the clients. 
-
-The server component will listen on events of GitHub API3 and send them to the message broker of your choice. (rabbitmq and kafka (kafka not yet implemented)
+The server component will listen on events of GitHub API3 and send them to the message broker of your choice. (rabbitmq and kafka (kafka not yet implemented))
 
 The clients will then consume this events and with a message-handler and filter react on this event. 
 
 An application/tool developer need only to implement the handler and the needed filter of events.
 
-# Layout of repo:
+### Layout of repo:
 
 This repository contains basically two clojure projects.
 
@@ -64,10 +67,6 @@ This repository contains basically two clojure projects.
 Cosmic-river server aims to distribute the GitHub events to the message-brokers.
 
 The criver-clients will consume these events, filtering them and triggering the automation needed.
-
-# Quickstart
-
-For a step by step tutorial, refert to FIXME.
 
 # Community:
 
