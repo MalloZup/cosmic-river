@@ -1,17 +1,24 @@
 ;; cosmic-river client for rabbitmq
 
 ;; read upstream rabbitmq documentation for further details
-
 { 
              :rabbitmq-consumers [
              ;; qe-name: queue name of consumer
              ;; exchange-name: shuould exist on the server side otherwise we can't bind
              ;; handler-shell: this is shell command that it will execute when the client receive the message.
 
+             ;; -- filter allow to filter events on type and other criteria
+             
+             ;; below are listed the current criteria:
+
+             ;; --> type: specify which type you wish to filter. The types are the GitHub types see https://developer.github.com/v3/activity/events/types/
+              
+             ;; --
+
              ;; TODO: implement a filter based on the events. E.g if we have a whole repository events, we should 
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-             {:qe-name "branzi" :exchange-name "branzino" :shell-command "uptime"},
-             {:qe-name "branzi" :exchange-name "branzino" :shell-command "ls"},
+               {:qe-name "branzi" :exchange-name "branzino" :shell-command "uptime" :filter {:type "CreateEvent"} },
+               {:qe-name "branzi" :exchange-name "branzino" :shell-command "ls"},
              ]
 
 }

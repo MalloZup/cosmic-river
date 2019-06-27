@@ -23,6 +23,7 @@
         uid-etag  (keyword (str github-user "-" github-repo "-" event))
         ;; if this hash changes, something on the repo is new/changed and we will send the new raw events.
         etag-hash (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))]
+    (when (nil? etag-hash) (println "[DEBUG]: github rate-limit exceed"))
     (when (= etag-hash (get-in @etag-cache [uid-etag])) 
       (println "[DEBUG]:  etag-repository already present in cache"))
     ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
@@ -42,7 +43,6 @@
       (when (= "issue" (str/lower-case event))
         ;; do things with issue events of repository
         (println "do issue stuff")))))
- 
 
 (defn -main []
    (msg-broker/init)
@@ -50,7 +50,6 @@
    (dispatch-all-repo-events)
 )
 
-;; TODO: add a reload and a timeout for recheking new events (by edn)
 (defn daemonize []
   (while true
       (let [interval (* 5 60 1000)] 

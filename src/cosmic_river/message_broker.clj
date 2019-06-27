@@ -4,7 +4,6 @@
 )
 
 ;; this namespace will be kind of interface for wrapping all the other different message-broker implementations.
-
 ;; rabbitmq, and others. (kafka etc)
 
 ;; publish an event.
