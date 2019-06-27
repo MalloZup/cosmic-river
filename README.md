@@ -21,10 +21,11 @@ Both methods have problems:
 -  In Web-hook scenario tools devlopers mostly don't have rights to setup web-hooks in all repository. E.g you can't setup a web-hook to https://github.com/clojure/clojure or others repositories you haven't control.
 
 Cosmic river has been designed with the aim of ensuring that it satisfies the requirements of both application developers as well as toolmakers.
-Cosmic river by a simple configuration, you can watch all your GitHub repository of your choice and  where you don't have control, and automate your workflow based on GitHub.
+Cosmic-river will collect all the GitHub events and dispatch them to specific clients.
+The clients can react by the events with specific handlers, and or filter this events by categories.  
+
 
 Also tool/application developers will have an universal API on events, where they can bind their application without any development cost.
-
 
 ## Use-cases:
 
@@ -46,10 +47,9 @@ As example consider this use-case:
 - Team Metrics/Events:
  * you could trigger specific actions/workflows, or simply gather data thanks to events
 
-
 # Architecture:
 
-Cosmic River is a lightweight Distributed application Server/Client model, and made to be composable. 
+Cosmic river is a lightweight distributed application Server/Client model, and made to be composable. 
 
 The server component will listen on events of GitHub API3 and send them to the message broker of your choice. (rabbitmq and kafka (kafka not yet implemented))
 
