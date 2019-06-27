@@ -28,7 +28,7 @@ Note that by it's universality, cosmic-river has a huge variety of application. 
 As example consider this use-case:
 
 - Release automation:
- * consider ttps://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or a twitter message etc.
+ * consider https://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or a twitter message etc.
  * The slack/IRC notification is the application developers responsability to interface. (see the tutorial for more details)
   
  * consider  the https://github.com/kubernetes/kubernetes publish a new release, cosmic-river can trigger automatically the needed automation for making a new package for your distro, testing it with your tool

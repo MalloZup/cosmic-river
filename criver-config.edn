@@ -24,10 +24,12 @@
              ],
              :organisation-events [
              ;; organisation public events
-             {:organisation "openSUSE" :events["org"]},
+               {:organisation "openSUSE" :events["org"]},
              ]
             ;; --------------------------------------------------------------
             ;; rabbitmq or kafka
             :message-broker {:type "rabbitmq" :config { 
+                                                       ;; TODO: exchange-name it might be passed to each event. Here is global
                                                        :exchange-name "branzino"}
+                            } 
 }}
