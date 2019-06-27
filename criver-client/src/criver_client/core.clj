@@ -21,6 +21,7 @@
         ch    (lch/open conn)
         shell-command (:shell-command consumer)
         msg-handler  (fn [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
+                     (println (String. payload "UTF-8"))
                      (println (:out (sh shell-command))))]
 
      

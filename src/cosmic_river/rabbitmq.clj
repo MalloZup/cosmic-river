@@ -12,6 +12,7 @@
   (let [conn  (rmq/connect)
         ch    (lch/open conn)]
     ;; start consumer before publish
+    (println event)
     (lb/publish ch ex "" (json/generate-string event) {:content-type "application/json" :type "github.repo"})
     (rmq/close ch)
     (rmq/close conn)))

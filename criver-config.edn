@@ -26,10 +26,8 @@
              ;; organisation public events
              {:organisation "openSUSE" :events["org"]},
              ]
-             ;; --------------------------------------------------------------
-
+            ;; --------------------------------------------------------------
             ;; rabbitmq or kafka
             :message-broker {:type "rabbitmq" :config { 
                                                        :exchange-name "branzino"}
-                                                      }
 }}

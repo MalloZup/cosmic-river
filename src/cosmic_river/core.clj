@@ -1,4 +1,3 @@
-
 (ns cosmic-river.core
   (:require 
    [tentacles.events]
@@ -39,17 +38,17 @@
         github-repo (last (str/split full-repo-name #"/"))
         ;; uid used for storing the e-tag to atom
         uid-etag  (keyword (str github-user "-" github-repo "-" event))
+        ;; if this hash changes, something on the repo is new/changed and we will send the new raw events.
         etag-hash (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))]
-    ;;etag-hash is not present in atom-cache, we need to get events first then update atom with new et
+    (when (= etag-hash (get-in @etag-cache [uid-etag])) 
+      (println "[DEBUG]:  etag-repository already present in cache"))
+    ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
-      ;; TODO: this will use messagebroker to send this events
-      (println "publishing rabbitmq event")
       (message-broker-publish (tentacles.events/repo-events github-user github-repo))
-       
       (swap! etag-cache merge { uid-etag 
                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))}))))  
 
-
+;; we will need other functions for the other events.
 (defn dispatch-all-repo-events []
   "dispatch only repository events"
   (doseq [repo-entry (get-config-repo-events)] 
