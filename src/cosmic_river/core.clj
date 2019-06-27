@@ -2,7 +2,8 @@
   (:require 
    [tentacles.events]
    [tentacles.core]
-   [cosmic-river.rabbitmq :as rabbitmq]
+   [cosmic-river.message_broker :as msg-broker]
+   [cosmic-river.server_config :as criver]
    [clojure.string :as str])
            (:gen-class))
 
@@ -13,24 +14,6 @@
 ;; this will contain all different repository/events (uid) e-tag.
 ;; we need this so we can fetch only events when e-tag change
 (def etag-cache (atom {}))
-
-(defn server-edn-config []
-  (clojure.edn/read-string (slurp "criver-config.edn")))
-
-(defn get-criver-config []
-  (get-in (server-edn-config) [:criver-config]))
-
-(defn get-config-repo-events []
-  "read config and get only repository events"
-  (get-in  (get-criver-config) [:repository-events]))
-
-;;q publish an event.
-(defn message-broker-publish [event]
-  (let [mb (get-in (get-criver-config) [:message-broker])]
-    (when = (:type mb) "rabbitmq")
-     (println "publishing to rabbitmq-event")
-     (rabbitmq/publish-event (get-in mb [:config, :exchange-name]) event)
-))
 
 (defn get-repo-events [full-repo-name event]
   "read from GitHub api v3 the repo events"
@@ -44,14 +27,14 @@
       (println "[DEBUG]:  etag-repository already present in cache"))
     ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
-      (message-broker-publish (tentacles.events/repo-events github-user github-repo))
+      (msg-broker/publish-event (tentacles.events/repo-events github-user github-repo) (criver/get-criver-config))
       (swap! etag-cache merge { uid-etag 
                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo)))}))))  
 
 ;; we will need other functions for the other events.
 (defn dispatch-all-repo-events []
   "dispatch only repository events"
-  (doseq [repo-entry (get-config-repo-events)] 
+  (doseq [repo-entry (criver/get-config-repo-events)] 
     (doseq [event (:events repo-entry)]  
       (when (= "repository" (str/lower-case event)) 
         ;; do things with only repo events
@@ -59,18 +42,10 @@
       (when (= "issue" (str/lower-case event))
         ;; do things with issue events of repository
         (println "do issue stuff")))))
-  
-
-(defn init-message-broker []
-  (let [mb (get-in (get-criver-config) [:message-broker])]
-    (when = (:type mb) "rabbitmq")
-     ;; TODO: it might be that we need more exchange-names, e.g by different types of events
-     (rabbitmq/init (get-in mb [:config, :exchange-name])) 
-     ;; kafka ..)
-  ))
+ 
 
 (defn -main []
-   (init-message-broker)
+   (msg-broker/init)
     ;; it should be easy to add other dispatcher which are executed in parallel.
    (dispatch-all-repo-events)
 )
