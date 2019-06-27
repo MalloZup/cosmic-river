@@ -25,16 +25,17 @@ Also tool/application developers will have an universal API on events, where the
 
 Note that by it's universality, cosmic-river has a huge variety of application. It can be applied in all domains where event-driven automation based on GitHub make sense.
 
-Here are listed some application of cosmic-river, but there are others.
+As example consider this use-case:
 
 - Release automation:
-  examples:  
-           if the https://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or a twitter message etc.
-              The slack/IRC notification is the application developers responsability to interface. (see the tutorial for more details)
+ * consider ttps://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or a twitter message etc.
+ * The slack/IRC notification is the application developers responsability to interface. (see the tutorial for more details)
   
-           if the https://github.com/kubernetes/kubernetes publish a new release, cosmic-river can trigger automatically the needed automation for making a new package for your distro, testing it with your tool
+ * consider  the https://github.com/kubernetes/kubernetes publish a new release, cosmic-river can trigger automatically the needed automation for making a new package for your distro, testing it with your tool
 
- Testing-automaiton,  Data-Sciences, Packaging, etc.
+Other use-case are:
+
+`Testing-automaiton`, `infrastructure-as-code`, `Data-Sciences`, `Packaging`, `Social-Networking automation`, everything based on a GItHub event. etc
 
 # Architecture:
 
