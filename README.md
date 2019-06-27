@@ -2,6 +2,11 @@
 
 Minimalistic event-driven message oriented middleware  GitHub automation for bigger/small organisations or individuals
 
+- [Rationale](#rationale)
+- [quickstart](#quickstart)
+- [Use-cases](#use-cases)
+- [Specification](doc/specification.md)
+
 # Rationale:
 
 Most of the teams organisations use an automation around GitHub in terms of CI, Releases, Social-Network automation, etc.
