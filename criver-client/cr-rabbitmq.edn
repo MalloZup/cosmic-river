@@ -9,7 +9,6 @@
 
 
              ;; ---------  Filters: ---------------
-
              ;; --key-filter::
              ;;  allow to filter events on the key-type. It get only the 1st level type, not nested.
              ;;  e.g for repo it will print {:id 133 :name "mallo" :url "bla"}
@@ -20,8 +19,7 @@
              ;; ------------------------------------------
 
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "branzina" :exchange-name "branzini" :shell-command "uptime" :key-filter ["type", "id", "repo"] },
-               {:qe-name "branzinb" :exchange-name "branzini" :shell-command "ls"},
+               {:qe-name "na" :exchange-name "neoex" :shell-command "uptime" :key-filter ["type", "id", "repo"] },
+               {:qe-name "nb" :exchange-name "neoex" :shell-command "ls" :key-filter ["type"]},
              ]
-
 }
