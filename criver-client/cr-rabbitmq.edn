@@ -7,17 +7,20 @@
              ;; exchange-name: shuould exist on the server side otherwise we can't bind
              ;; handler-shell: this is shell command that it will execute when the client receive the message.
 
-             ;; -- filter allow to filter events on type and other criteria
+
+             ;; ---------  Filters: ---------------
+
+             ;; --key-filter::
+             ;;  allow to filter events on the key-type. It get only the 1st level type, not nested.
+             ;;  e.g for repo it will print {:id 133 :name "mallo" :url "bla"}
              
-             ;; below are listed the current criteqria:
+             ;; TODO: implment a type filter to be added to the key-filter
 
-             ;; --> type: specify which type you wish to filter. The types are the GitHub types see https://developer.github.com/v3/activity/events/types/
-              
-             ;; --
+             ;; it should be like: key  :type "CreateEvent"
+             ;; ------------------------------------------
 
-             ;; TODO: implement a filter based on the events. E.g if we have a whole repository events, we should 
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "branzina" :exchange-name "branzini" :shell-command "uptime" :filter {:type "CreateEvent"} },
+               {:qe-name "branzina" :exchange-name "branzini" :shell-command "uptime" :key-filter ["type", "id", "repo"] },
                {:qe-name "branzinb" :exchange-name "branzini" :shell-command "ls"},
              ]
 
