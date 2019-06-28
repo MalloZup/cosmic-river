@@ -1,5 +1,9 @@
 # Specification of cosmic-river
 
+- [server](#server)
+- 
+
+
 # Server
 
 In order to launch the server create a `criver-config.edn` file from where you execute the cosmic-river binary.
@@ -38,6 +42,15 @@ You can choose different types of message brokers.
 Currenlty only `rabbitmq` is supported.
 
 Each message-broker will have it's own specific configuration.
+
+
+### authentification
+
+Optional: authentification for github user.
+
+```
+             :oauth-token <token>
+```              
 
 
 #### Rabbitmq

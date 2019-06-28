@@ -6,12 +6,18 @@
             [langohr.consumers :as lc]))
 
 (use '[clojure.java.shell :only [sh]])
+(use 'clojure.java.io)
 
 (defn client-edn-config []
   (clojure.edn/read-string (slurp "cr-rabbitmq.edn")))
 
 (defn rabbitmq-consumers [] (get-in (client-edn-config) [:rabbitmq-consumers]))
 
+(defn dump-events-to-file [events-json]
+ (println (parse-string events-json))
+ (with-open [wrtr (writer "/tmp/criver-event.json")]
+ (.write wrtr events-json)))
+ 
 
 (defn filter-events [events-json]
   (parse-string events-json true))
@@ -27,6 +33,7 @@
         shell-command (:shell-command consumer)
         msg-handler  (fn [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
  ;;                    (println (filter-events payload))
+                     (dump-events-to-file  (String. payload "UTF-8"))
                      (println (:out (sh shell-command))))]
 
      

@@ -3,6 +3,14 @@
 ;; public is in GitHub terminology what is not private.
 
 {:criver-config { 
+
+             ;;
+             ;; optional: authentification for github user.
+             ;; cosmic-river works without authentification. However if you have a token you can access private and rate-limiting is higher
+             ;; token based auth 
+             :oauth-token  "mytoken"
+
+
              ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
              ;; https://developer.github.com/v3/activity/events/
 
