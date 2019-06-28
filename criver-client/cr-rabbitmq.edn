@@ -6,20 +6,11 @@
              ;; qe-name: queue name of consumer
              ;; exchange-name: shuould exist on the server side otherwise we can't bind
              ;; handler-shell: this is shell command that it will execute when the client receive the message.
-
-
-             ;; ---------  Filters: ---------------
-             ;; --key-filter::
-             ;;  allow to filter events on the key-type. It get only the 1st level type, not nested.
-             ;;  e.g for repo it will print {:id 133 :name "mallo" :url "bla"}
-             
-             ;; TODO: implment a type filter to be added to the key-filter
-
-             ;; it should be like: key  :type "CreateEvent"
-             ;; ------------------------------------------
-
+              
+             ;; to the shell handler pass via environ all the msg property
+            
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "na" :exchange-name "neoex" :shell-command "uptime" :key-filter ["type", "id", "repo"] },
-               {:qe-name "nb" :exchange-name "neoex" :shell-command "ls" :key-filter ["type"]},
+               {:qe-name "na" :exchange-name "neoex" :shell-command "uptime" },
+               {:qe-name "nb" :exchange-name "neoex" :shell-command "ls" },
              ]
 }
