@@ -2,7 +2,7 @@
   (:require [langohr.core      :as rmq]
             [langohr.channel   :as lch]
             [langohr.exchange  :as le]
-            [cheshire.core :as json]
+            [cheshire.core :refer :all]
             [langohr.basic     :as lb]))
 
 ;; TODO: investigate if conn/connect can be called without any problems
@@ -12,7 +12,7 @@
   (let [conn  (rmq/connect)
         ch    (lch/open conn)]
     ;; start consumer before publish
-    (lb/publish ch ex "" (json/generate-string event) {:content-type "application/json" :type "github.repo"})
+    (lb/publish ch ex "" (generate-smile event) {:content-type "application/json" :type "github.repo"})
     (rmq/close ch)
     (rmq/close conn)))
 

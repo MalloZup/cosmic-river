@@ -10,3 +10,5 @@
   "read config and get only repository events"
   (get-in  (get-criver-config) [:repository-events]))
   
+(defn get-gh-token []
+  (get-in  (get-criver-config) [:oauth-token]))

@@ -6,20 +6,19 @@
             [langohr.consumers :as lc]))
 
 (use '[clojure.java.shell :only [sh]])
-(use 'clojure.java.io)
 
-
-(defn exec-cmd-and-pass-env-var [shell-command tmp-file-path]
-  (println (:out (sh shell-command :env {"CRIVER_EVENTS_FPATH" tmp-file-path}))))
+(def repo-event-env-var "CRIVER_EVENTS_REPO")
+(defn exec-cmd-and-pass-env-var [shell-command tmp-file-path env-var-name]
+  (println (:out (sh shell-command :env {env-var-name tmp-file-path}))))
 
 (defn dump-events-to-tmp-file [events-json tmp-file-name]
- (with-open [wrtr (writer tmp-file-name)]
- (.write wrtr events-json)))
+ (generate-stream events-json (clojure.java.io/writer tmp-file-name)))
  
 (defn client-edn-config []
   (clojure.edn/read-string (slurp "cr-rabbitmq.edn")))
 
-(defn rabbitmq-consumers [] (get-in (client-edn-config) [:rabbitmq-consumers]))
+(defn rabbitmq-consumers [] 
+  (get-in (client-edn-config) [:rabbitmq-consumers]))
 
 (defn start-consumers  []
   "Starts a consumer bound to the given topic exchange in a separate thread"
@@ -31,11 +30,9 @@
         shell-command (:shell-command consumer)
         tmp-file-path (str "/tmp/" "criver-" ex-name "-" (str (rand-int 90)) "-" qe-name "-" "events.json" )
         msg-handler  (fn [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
-                       (println payload)
-                       (dump-events-to-tmp-file (String. payload "UTF-8") tmp-file-path)
-                       (exec-cmd-and-pass-env-var shell-command tmp-file-path)
+                       (dump-events-to-tmp-file (parse-smile payload) tmp-file-path)
+                       (exec-cmd-and-pass-env-var shell-command tmp-file-path repo-event-env-var)
                        )]
-
      
     (println (str "[DEBUG]: starting consumer with queue-name: " qe-name "and ex-name: " ex-name))
 
