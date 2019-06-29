@@ -20,8 +20,7 @@ require 'json'
 
 ## 1) open the tmp data file
 # open the repo-events json. The env variable contain the file full-path
-#file = File.open(ENV['CRIVER_EVENTS_REPO'])
-file = File.open("/tmp/criver-neoex-53-criver.na-events.json")
+file = File.open(ENV['CRIVER_EVENTS_REPO'])
 criver_repo_data = JSON.load file
 
 # 3) perform action with data filtered..
