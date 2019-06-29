@@ -10,7 +10,7 @@
              ;; to the shell handler pass via environ all the msg property
             
              ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "na" :exchange-name "neoex" :shell-command "uptime" },
-               {:qe-name "nb" :exchange-name "neoex" :shell-command "ls" },
+               {:qe-name "na" :exchange-name "neoex" :shell-command "./handle-event.rb" },
+               {:qe-name "nb" :exchange-name "neoex" :shell-command "./handle-event.rb" },
              ]
 }
