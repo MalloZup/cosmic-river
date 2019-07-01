@@ -3,14 +3,14 @@
 ;; read upstream rabbitmq documentation for further details
 { 
              :rabbitmq-consumers [
-             ;; qe-name: queue name of consumer
-             ;; exchange-name: shuould exist on the server side otherwise we can't bind
-             ;; handler-shell: this is shell command that it will execute when the client receive the message.
-              
-             ;; to the shell handler pass via environ all the msg property
+             ;; exchange-name: 
+             ;;   create the exchange on the server side otherwise we can't bind on client.
+             ;;   for each exchange-name(different or same), you can bind different handlers.
+             ;;   upstream doc: exchange names: ( https://www.rabbitmq.com/tutorials/tutorial-three-python.html)
+             ;; handler-shell: 
+             ;;   this is shell command that it will execute when the client receive the message.              
+             ;;   to the shell handler pass via environ all the msg property
             
-             ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "na" :exchange-name "neoex" :shell-command "./handle-event.rb" },
-               {:qe-name "nb" :exchange-name "neoex" :shell-command "./handle-event.rb" },
-             ]
-}
+               {:exchange-name "neoex" :shell-command "./handle-event.rb" },
+               {:exchange-name "neoex" :shell-command "./handle-event.rb" }
+]}

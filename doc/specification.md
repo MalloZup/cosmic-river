@@ -1,8 +1,7 @@
 # Specification of cosmic-river
 
 - [server](#server)
-- 
-
+- [client](#client) 
 
 # Server
 
@@ -43,6 +42,8 @@ Currenlty only `rabbitmq` is supported.
 
 Each message-broker will have it's own specific configuration.
 
+In future other message-brokers are planned to be supported.
+
 
 ### authentification
 
@@ -73,30 +74,24 @@ We support only rabbitmq client currenlty.
 You should start your client with the following file in same directory where you client run: `cr-rabbitmq.edn`
 
 
-## Rabbitmq-Client
-;; cosmic-river client for rabbitmq
+## clients
 
-;; read upstream rabbitmq documentation for further details
+## Rabbitmq cosmic-river clients
+
+When starting a client you need that the exchange exists on server. 
+The exchange name will then receive mgs and execute the handlers.
+For the same exchange, you can bind different handlers, ash showed in example:
+
 { 
              :rabbitmq-consumers [
-             ;; qe-name: queue name of consumer
              ;; exchange-name: shuould exist on the server side otherwise we can't bind
              ;; handler-shell: this is shell command that it will execute when the client receive the message.
 
-             ;; -- filter allow to filter events on type and other criteria
-             
-             ;; below are listed the current criteria:
+             ;; -- handlers: they can be either commands or custom binaries/scripts
 
-             ;; --> type: specify which type you wish to filter. The types are the GitHub types see https://developer.github.com/v3/activity/events/types/
-              
-             ;; --
-
-             ;; TODO: implement a filter based on the events. E.g if we have a whole repository events, we should 
-             ;; have the possibility to filter like only a released event. ( to be thinked about if we want to expose this or not)
-               {:qe-name "branzi" :exchange-name "branzino" :shell-command "uptime" :filter {:type "CreateEvent"} },
-               {:qe-name "branzi" :exchange-name "branzino" :shell-command "ls"},
+               {:exchange-name "repository-events" :shell-command "/full-pathtomy/handler.py"},
+               {:exchange-name "clojure-events" :shell-command "uptime"},
+               {:exchange-name "repository-events" :shell-command "uptime"},
              ]
 
 }
-
-

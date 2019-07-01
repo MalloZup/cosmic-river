@@ -3,7 +3,8 @@
 ### ------------------------------------
 ####  what does this event-handler it does?: ####
 
-# look if a repository in GitHub has a new tag event. 
+# This handler looks if a repository in GitHub has a new tag event(CreateEvent).
+#
 # A new tag,  might correspond to a release event (e.g we have a new release of kubernetes/clojure/ etc),
 # if there is a new tag/release, perform some action, e.g send for example a mesg to a slack/rocketchat, or other any actions.
 ### ------------------------------------
@@ -28,6 +29,7 @@ criver_repo_data = JSON.load file
 def perform_action(event_data)
   puts event_data
   puts event_data[:repo_name]
+  puts "--------------"
 end
 
 
@@ -41,11 +43,14 @@ criver_repo_data.each do |event|
 	if event["type"] == "CreateEvent"
           # we are interested only on master tag/release
 	  if event["payload"]["master_branch"] == "master"
-            perform_action({repo_name: event["repo"]["name"],
+            ## we want only a specific repository name
+            if event["repo"]["name"] == "MalloZup/fullrocketmetal"
+              perform_action({repo_name: event["repo"]["name"],
 	                    repo_url: event["repo"]["url"],
 			    tag_number: event["payload"]["ref"],
 			    ref_type: event["payload"]["ref_type"],
 	                    created_at: event["created_at"]})
+           end
           end
         end
 end

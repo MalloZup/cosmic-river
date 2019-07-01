@@ -23,10 +23,10 @@
 (defn start-consumers  []
   "Starts a consumer bound to the given topic exchange in a separate thread"
   (doseq [consumer (rabbitmq-consumers)]
-   (let [qe-name (format "criver.%s" (:qe-name consumer))
-         conn  (rmq/connect)
+   (let [ conn  (rmq/connect)
         ex-name (:exchange-name consumer)
         ch    (lch/open conn)
+        qe-name (lq/declare-server-named ch {:exclusive false :auto-delete true})
         shell-command (:shell-command consumer)
         tmp-file-path (str "/tmp/" "criver-" ex-name "-" (str (rand-int 90)) "-" qe-name "-" "events.json" )
         msg-handler  (fn [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
@@ -36,6 +36,5 @@
      
     (println (str "[DEBUG]: starting consumer with queue-name: " qe-name "and ex-name: " ex-name))
 
-    (lq/declare ch qe-name {:exclusive false :auto-delete true})
     (lq/bind    ch qe-name ex-name)
     (lc/subscribe ch qe-name msg-handler {:auto-ack true}))))
