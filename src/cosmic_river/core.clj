@@ -47,12 +47,14 @@
         (println "do issue stuff")))))
 
 (defn -main []
-   (msg-broker/init)
-    ;; it should be easy to add other dispatcher which are executed in parallel.
-   (dispatch-all-repo-events)
-)
+ ;; make a daemon
+ (while true
+    (let [interval (* 5 60 1000)]
+       (dispatch-all-repo-events) 
+       (Thread/sleep interval))
+       (println "[DEBUG:] sleeping for timeout 5 min")))
 
-(defn daemonize []
-  (while true
-      (let [interval (* 5 60 1000)] 
-      (Thread/sleep interval))))
+(defn init []
+"the init function should be called before starting the server as daemon"
+ (msg-broker/init)
+)
