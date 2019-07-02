@@ -46,15 +46,29 @@
         ;; do things with issue events of repository
         (println "do issue stuff")))))
 
-(defn -main []
- ;; make a daemon
- (while true
-    (let [interval (* 5 60 1000)]
-       (dispatch-all-repo-events) 
-       (Thread/sleep interval))
-       (println "[DEBUG:] sleeping for timeout 5 min")))
 
-(defn init []
-"the init function should be called before starting the server as daemon"
- (msg-broker/init)
+(defn help-msg-cli []
+  (println "use \"init\" for initializing the msg broker")
+  (println "use \"start\" daemon after init")
 )
+
+(defn start-daemon []
+  (while true
+    (let [interval (* 5 60 1000)]
+      (dispatch-all-repo-events) 
+      (Thread/sleep interval))
+      (println "[DEBUG:] sleeping for timeout 5 min")))
+
+
+(defn -main [& args]
+  (if-not (empty? args)
+    (doseq [arg args]
+      (when (= arg "init")
+        (msg-broker/init)) 
+      (when (= arg "start")
+        (start-daemon))))
+  (when (empty? args) 
+    (help-msg-cli) 
+  )
+)
+
