@@ -20,3 +20,4 @@
   (let [conn  (rmq/connect)
         ch    (lch/open conn)]
     (le/declare ch ex "fanout" {:durable false :auto-delete true})))
+

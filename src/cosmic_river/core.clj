@@ -16,7 +16,7 @@
 ;; we need this so we can fetch only events when e-tag change
 (def etag-cache (atom {}))
 
-(defn get-repo-events [full-repo-name event]
+(defn get-repo-events [full-repo-name event exchange-name]
   "read from GitHub api v3 the repo events"
   (let [github-user (first (str/split full-repo-name #"/"))
         github-repo (last (str/split full-repo-name #"/"))
@@ -30,7 +30,7 @@
       (println "[DEBUG]:  etag-repository already present in cache"))
     ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
-      (msg-broker/publish-event (tentacles.events/repo-events github-user github-repo) (criver/get-criver-config))
+      (msg-broker/publish-event (tentacles.events/repo-events github-user github-repo) (criver/get-criver-config) exchange-name)
       (swap! etag-cache merge { uid-etag 
                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))}))))  
 
@@ -41,7 +41,7 @@
     (doseq [event (:events repo-entry)]  
       (when (= "repository" (str/lower-case event)) 
         ;; do things with only repo events
-        (get-repo-events (:full-repo-name repo-entry) event))  
+        (get-repo-events (:full-repo-name repo-entry) event (:exchange-name repo-entry)))  
       (when (= "issue" (str/lower-case event))
         ;; do things with issue events of repository
         (println "do issue stuff")))))

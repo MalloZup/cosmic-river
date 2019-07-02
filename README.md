@@ -2,11 +2,11 @@
 
 Minimalistic event-driven message oriented middleware  GitHub automation for bigger/small organisations or individuals
 
-- [Rationale](#rationale)
 - [quickstart](doc/quickstart.md)
-- [Use-cases](#use-cases)
+- [architecture](doc/architecture.md)
+- [real-examples](doc/real-examples.md)
 - [Specification](doc/specification.md)
-
+- [Rationale](#rationale)
 # Rationale:
 
 Most of the teams organisations use an automation around GitHub in terms of CI, Releases, Social-Network automation, etc.
@@ -24,38 +24,26 @@ Cosmic river has been designed with the aim of ensuring that it satisfies the re
 Cosmic-river will collect all the GitHub events and dispatch them to specific clients.
 The clients can react by the events with specific handlers, and or filter this events by categories.  
 
-
 Also tool/application developers will have an universal API on events, where they can bind their application without any development cost.
 
-## Use-cases:
-
-Note that by it's universality, cosmic-river has a huge variety of application. It can be applied in all domains where event-driven automation based on GitHub make sense.
+Note that by by its universality, cosmic-river can be applied in different domains. 
+It can be applied in all domains where event-driven automation based on GitHub make sense.
 
 As example consider this use-case:
 
 - Release automation:
- * consider https://github.com/clojure/clojure publish a new release, cosmic-river server will notify the cosmic-river clients, which will perform actions  like trigger automatically a message to slack/irc, or perform other actions like building a package, test it, and other pipelines.
+ * you can watch a specific issue beeing closed, cosmic-river server will notify the cosmic-river clients, which will perform custom actions.
 
  * consider  the https://github.com/kubernetes/kubernetes publish a new release, cosmic-river can trigger automatically the needed automation for making a new package for your distro, testing it with your tool
 
 - Testing, CI, Automation:
- * consider you have Pull-Requests on some repos, cosmic-river can watch the events  and trigger the needed actions without using a polling mechanism
+ * automation on  Pull-Requests, etc.
 
 - Event Notifications:
- * get notified with your custom actions when some Event type happen on the watched repo
+ * get notified with an Issue is closed, or any other particular event occurs.
 
 - Team Metrics/Events:
- * you could trigger specific actions/workflows, or simply gather data thanks to events
-
-# Architecture:
-
-Cosmic river is a lightweight distributed application Server/Client model, and made to be composable. 
-
-The server component will listen on events of GitHub API3 and send them to the message broker of your choice. (rabbitmq and kafka (kafka not yet implemented))
-
-The clients will then consume this events and with a message-handler and filter react on this event. 
-
-An application/tool developer need only to implement the handler and the needed filter of events.
+ * you could trigger specific actions/workflows, or simply gather data thanks to specifics events
 
 ### Layout of repo:
 
@@ -72,9 +60,10 @@ The criver-clients will consume these events, filtering them and triggering the 
 
 You can join #cosmic-river at https://clojurians.slack.com/
 
-or open a thread at http://clojureverse.org/
+or open a thread at http://clojureverse.org/,
 
-or open an Issue here.
+or feel free to open an issue here for technical details.
+
 
 # Roadmap:
 
