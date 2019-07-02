@@ -8,8 +8,8 @@
              ;; https://developer.github.com/v3/activity/events/
              ;; watch events concerning a repository
              :repository-events [
-               {:full-repo-name "MalloZup/fullrocketmetal" :events["repository"] :exchange-name "metal"  },
-               {:full-repo-name "MalloZup/missile" :events["repository"]} :exchange-name "neox",
+               {:full-repo-name "MalloZup/fullrocketmetal" :events["repository"] :exchange-name "metal"},
+               {:full-repo-name "MalloZup/missile" :events["repository"] :exchange-name "neox" },
              ],
              
             :message-broker {:type "rabbitmq" :config {

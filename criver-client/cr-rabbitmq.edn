@@ -11,6 +11,6 @@
              ;;   this is shell command that it will execute when the client receive the message.              
              ;;   to the shell handler pass via environ all the msg property
             
-               {:exchange-name "neoex" :shell-command "./handle-event.rb" },
-               {:exchange-name "neoex" :shell-command "./handle-event.rb" }
+               {:exchange-name "metal" :shell-command "./handle-event.rb" },
+               {:exchange-name "neox" :shell-command "./handle-event.rb" }
 ]}

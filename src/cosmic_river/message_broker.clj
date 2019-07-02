@@ -17,6 +17,9 @@
 (defn init []
   (let [mb (get-in (criver/get-criver-config) [:message-broker])]
     (when = (:type mb) "rabbitmq")
-        (doseq [exchange-name (get-in (criver/get-criver-config) [:message-broker, :exchange-names] )]
-      (rabbitmq/init exchange-name)))) 
+        (println "[DEBUG]: using rabbitmq as message broker")
+       
+        (doseq [exchange-name (:exchange-names mb)]
+          (println (str "[DEBUG]: initializing exchange: " exchange-name))
+          (rabbitmq/init exchange-name)))) 
      ;; kafka ..)) 
