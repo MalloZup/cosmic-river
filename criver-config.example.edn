@@ -4,12 +4,11 @@
 
 {:criver-config { 
 
-             ;; token based auth 
+             ;; token based auth Github
+             ;; this parameter is optional! However reccomended for more rate-limiting.
              :oauth-token  "my-token"
 
-             ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
-             ;; https://developer.github.com/v3/activity/events/
-
+             ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for ( https://developer.github.com/v3/activity/events/)
              ;; this events are targeting a repository. there are others for user/orgs which are interesting too. (later)
              :repository-events [
                {:full-repo-name "MalloZup/fullrocketmetal" :events["repository"] :exchange-name "metal"  },
