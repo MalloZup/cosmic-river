@@ -2,7 +2,7 @@
 
 ## Basic Architecture:
 
-![Architecture basic](00_architecture.pdf)
+![Architecture basic](00_architecture.png)
  
 Cosmic river is a lightweight distributed application Server/Client model, made to be composable. 
  
