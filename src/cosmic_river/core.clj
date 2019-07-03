@@ -27,7 +27,8 @@
         etag-hash (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))]
     (when (nil? etag-hash) (println "[DEBUG]: github rate-limit exceed"))
     (when (= etag-hash (get-in @etag-cache [uid-etag])) 
-      (println "[DEBUG]:  etag-repository already present in cache"))
+      (println "[DEBUG]:  etag-repository already present in cache")
+      (println "[DEBUG]: no new repository event found"))
     ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
       (msg-broker/publish-event (tentacles.events/repo-events github-user github-repo) (criver/get-criver-config) exchange-name)
@@ -64,7 +65,10 @@
   (if-not (empty? args)
     (doseq [arg args]
       (when (= arg "init")
-        (msg-broker/init)) 
+        (msg-broker/init) 
+        (System/exit 0) 
+        )
+        
       (when (= arg "start")
         (start-daemon))))
   (when (empty? args) 

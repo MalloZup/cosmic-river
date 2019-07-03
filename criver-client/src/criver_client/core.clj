@@ -3,7 +3,8 @@
             [langohr.core   :as rmq]
             [langohr.channel :as lch]
             [cheshire.core :refer :all]
-            [langohr.consumers :as lc]))
+            [langohr.consumers :as lc])
+   (:gen-class))
 
 (use '[clojure.java.shell :only [sh]])
 
@@ -38,3 +39,7 @@
 
     (lq/bind    ch qe-name ex-name)
     (lc/subscribe ch qe-name msg-handler {:auto-ack true}))))
+
+(defn -main  []
+  (start-consumers)
+)

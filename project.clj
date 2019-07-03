@@ -1,5 +1,5 @@
-(defproject cosmic-river "0.1.0-SNAPSHOT"
-  :description "Cosmic-river: GitHub event middleware. Composable for application and tool developers"
+(defproject cosmic-river "0.1.0"
+  :description "Cosmic-river: GitHub event middleware. Composable message-broker interface for application and tool developers"
   :url "https://github.com/MalloZup/cosmic-river"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
             :url "https://www.eclipse.org/legal/epl-2.0/"}

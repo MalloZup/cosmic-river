@@ -1,19 +1,25 @@
+;; this specify which events we want to listen to and notify then.
+
+;; public is in GitHub terminology what is not private.
 
 {:criver-config { 
 
-             ;; GitHub token based auth  (optional). Having authentification increase rate-limiting
-             :oauth-token  "my-github-token"
+             ;; token based auth 
+             :oauth-token  "my-token"
 
              ;; full-repo-name: owner/repo-name,  events: this are the events which you are interested for
              ;; https://developer.github.com/v3/activity/events/
-             ;; watch events concerning a repository
+
+             ;; this events are targeting a repository. there are others for user/orgs which are interesting too. (later)
              :repository-events [
-               {:full-repo-name "MalloZup/fullrocketmetal" :events["repository"] :exchange-name "metal"},
-               {:full-repo-name "MalloZup/missile" :events["repository"] :exchange-name "neox" },
+               {:full-repo-name "MalloZup/fullrocketmetal" :events["repository"] :exchange-name "metal"  },
+               {:full-repo-name "MalloZup/missile" :events["repository"] :exchange-name "neox"},
+               ;; add your repos here...
              ],
              
-            :message-broker {:type "rabbitmq" :config {
-                                                       ;; init exchange names used by individual events
-                                                       :exchange-names ["neox", "metal"]}
-                            } 
-}}
+            :message-broker {
+                              :type "rabbitmq" 
+                              ; add your exchange-name here.
+                              :exchange-names ["neox", "metal"]
+                            }
+ }}

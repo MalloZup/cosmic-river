@@ -6,14 +6,16 @@ In this tutorial we will use the released Jars. But you can build your own with 
 
 ## Requirements:
 
-- rabbitmq-server up and running. See upstream documentation for installation and setup
+- rabbitmq-server up and running. See upstream documentation for installation and setup: https://www.rabbitmq.com/download.html
 
 ## Server side:
 * Create configuration:
 
 The cosmic river  server should need to be initialized with the respective configuration. `criver-config.edn`
-Refer to `criver-config.example.edn` for a minimal configuration.
 
+Refer to [criver-config.example.edn](criver-config.example.edn) for a minimal configuration.
+
+You can add your N repository which send the event to exchange-name. An exachange-name can have different repos event. ( Refer to upstream doc of rabbitmq for more info).
 
 * Initialize server
 After the config creation, initialize the server with `cosmic-river --init`
@@ -26,23 +28,15 @@ Before starting the server daemon initialize the clients so that you will receiv
 
 Start server with ```cosmic-river --start```
 
-
-
 ## Client/s:
 
-* configuration:
+0) You should have initialized the server with init.
 
-Refer to `cr-rabbitmq.example.edn` for the rabbitmq client minimal example.
+1) Create a config file: [cr-rabbitmq.edn](criver-client/cr-rabbitmq.edn), where you specify the exchange-name and the handler.
 
-* handler templates:
+2) Start the client with
 
-For your handlers take look on handlers-template directory `/cosmic-river/criver-client/handlers-template`.
+```java -jar target/criver-client-0.1.0-standalone.jar```
 
-Additionally you can find real-examples on `/home/dmaiocchi/bin/cosmic-river/criver-client/real-examples`
-
-* start clients with
-
-`criver-client`
-
-
+3) You can now start the server which will send events if any or new.
 
