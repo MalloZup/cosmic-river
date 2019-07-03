@@ -31,9 +31,9 @@
       (println "[DEBUG]: no new repository event found"))
     ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
     (when (not= etag-hash (get-in @etag-cache [uid-etag]))
-      (msg-broker/publish-event (tentacles.events/repo-events github-user github-repo) (criver/get-criver-config) exchange-name)
+      (msg-broker/publish-events {:type (get-in (criver/get-criver-config) [:message-broker :type]), :events (tentacles.events/repo-events github-user github-repo), :ex-name  exchange-name})
       (swap! etag-cache merge { uid-etag 
-                              (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))}))))  
+                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))}))))  
 
 ;; we will need other functions for the other events.
 (defn dispatch-all-repo-events []
@@ -68,7 +68,6 @@
         (msg-broker/init) 
         (System/exit 0) 
         )
-        
       (when (= arg "start")
         (start-daemon))))
   (when (empty? args) 

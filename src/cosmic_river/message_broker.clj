@@ -6,14 +6,15 @@
 ;; this namespace will be kind of interface for wrapping all the other different message-broker implementations.
 ;; rabbitmq, and others. (kafka etc)
 
+;; dispatch on type of message broker
+(defmulti publish-events (fn [message-broker] (:type message-broker)))
 
-(defn publish-event [event criver-config exchange-name]
-  (let [mb (get-in (criver/get-criver-config) [:message-broker])]
-    (when = (:type mb) "rabbitmq")
-       (println "publishing event using rabbitmq")
-       (rabbitmq/publish-event exchange-name event)
-))
+(defmethod publish-events "rabbitmq" [data] 
+       (println "[DEBUG]: publishing event using rabbitmq")
+       (rabbitmq/publish-event (:ex-name data) (:events data)))
 
+
+;; TODO: implement multi-method for this too
 (defn init []
   (let [mb (get-in (criver/get-criver-config) [:message-broker])]
     (when = (:type mb) "rabbitmq")

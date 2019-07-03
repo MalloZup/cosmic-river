@@ -13,5 +13,5 @@
              ;;   to the shell handler pass via environ all the msg property
             
                {:exchange-name "metal" :shell-command "handlers-template/handle-event.rb" },
-               {:exchange-name "neox" :shell-command "handlers-template/handle-event.py" }
+               {:exchange-name "neox" :shell-command "handlers-template/basic-repo-event.py" }
 ]}
