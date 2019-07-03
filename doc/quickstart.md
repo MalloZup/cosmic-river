@@ -20,7 +20,7 @@ Given other times constraints, this is not yet implemented.
 
 The cosmic river server should need to be initialized with the respective configuration. `criver-config.edn`
 
-Refer to [criver-config.example.edn](criver-config.example.edn) for a minimal configuration.
+Refer to [criver-config.example.edn](../criver-config.example.edn) for a minimal configuration.
 
 You can add your N repository which send the event to exchange-name. An exachange-name can have different repos event. ( Refer to upstream doc of rabbitmq for more info).
 
@@ -40,7 +40,7 @@ Start server with ```cosmic-river start``` (use java -jar and path to the jar)
 
 0) You should have initialized the server with init.
 
-1) Create a config file: [cr-rabbitmq.edn](criver-client/cr-rabbitmq.edn), where you specify the exchange-name and the handler.
+1) Create a config file: [cr-rabbitmq.edn](../criver-client/cr-rabbitmq.edn), where you specify the exchange-name and the handler.
 
 2) Start the client with
 
