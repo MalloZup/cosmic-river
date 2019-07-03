@@ -2,23 +2,31 @@
 
 In this tutorial we will use the released Jars. But you can build your own with `lein` the Clojure build tool.
 
+Experimental documentation! 
+
 # Cosmic-river Rabbitmq quickstart
+
+Use cosmic-river server where the rabbitmq-server is running. In future a url can be passed to run cosmic-river in other machines separately from rabbitmq.
+
+Given other times constraints, this is not yet implemented.
 
 ## Requirements:
 
 - rabbitmq-server up and running. See upstream documentation for installation and setup: https://www.rabbitmq.com/download.html
 
 ## Server side:
+
 * Create configuration:
 
-The cosmic river  server should need to be initialized with the respective configuration. `criver-config.edn`
+The cosmic river server should need to be initialized with the respective configuration. `criver-config.edn`
 
 Refer to [criver-config.example.edn](criver-config.example.edn) for a minimal configuration.
 
 You can add your N repository which send the event to exchange-name. An exachange-name can have different repos event. ( Refer to upstream doc of rabbitmq for more info).
 
-* Initialize server
-After the config creation, initialize the server with `cosmic-river --init`
+* Initialize server:
+
+After the config creation, initialize the server with `cosmic-river init` ( use java jar and path to the jar)
 
 * Initialize the clients:
 
@@ -26,7 +34,7 @@ Before starting the server daemon initialize the clients so that you will receiv
 
 * Start the server
 
-Start server with ```cosmic-river --start```
+Start server with ```cosmic-river start``` (use java -jar and path to the jar)
 
 ## Client/s:
 
