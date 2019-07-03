@@ -5,7 +5,6 @@ Minimalistic event-driven message oriented middleware  GitHub automation for big
 - [quickstart](doc/quickstart.md)
 - [architecture](doc/architecture.md)
 - [real-examples](doc/real-examples.md)
-- [Specification](doc/specification.md)
 - [Rationale](#rationale)
 
 # Rationale:
