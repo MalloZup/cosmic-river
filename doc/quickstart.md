@@ -26,15 +26,11 @@ You can add your N repository which send the event to exchange-name. An exachang
 
 * Initialize server:
 
-After the config creation, initialize the server with `cosmic-river init` ( use java jar and path to the jar)
+After the config creation, initialize the server with `java -jar /home/dmaiocchi/bin/cosmic-river/target/cosmic-river-0.1.0-standalone.jar init`)
 
 * Initialize the clients:
 
 Before starting the server daemon initialize the clients so that you will receive the events.
-
-* Start the server
-
-Start server with ```cosmic-river start``` (use java -jar and path to the jar)
 
 ## Client/s:
 
@@ -48,3 +44,10 @@ Start server with ```cosmic-river start``` (use java -jar and path to the jar)
 
 3) You can now start the server which will send events if any or new.
 
+___
+
+# Server side
+
+* Start the server
+
+Start server with `java -jar /home/dmaiocchi/bin/cosmic-river/target/cosmic-river-0.1.0-standalone.jar start`
