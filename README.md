@@ -7,22 +7,12 @@ Minimalistic event-driven message oriented middleware  GitHub automation for big
 - [real-examples](doc/real-examples.md)
 - [Specification](doc/specification.md)
 - [Rationale](#rationale)
+
 # Rationale:
 
-Most of the teams organisations use an automation around GitHub in terms of CI, Releases, Social-Network automation, etc.
-Some use a polling mechanism and others might use GitHub web-hooks, this are provided by GitHub API.
-
-Both methods have problems:
-
--  they are not universal and generic
-
--  In a polling method most of tools developers create a custom specific tool which fits only their specific problem, e.g getting a specific "event" in different languages, do the application code etc.
-
--  In Web-hook scenario tools devlopers mostly don't have rights to setup web-hooks in all repository. E.g you can't setup a web-hook to https://github.com/clojure/clojure or others repositories you haven't control.
-
-Cosmic river has been designed with the aim of ensuring that it satisfies the requirements of both application developers as well as toolmakers.
+Cosmic river has been designed with the aim of ensuring that it satisfies the requirements of both application developers as well as toolmakers for Github based events.
 Cosmic-river will collect all the GitHub events and dispatch them to specific clients.
-The clients can react by the events with specific handlers, and or filter this events by categories.  
+The clients can react by the events with specific handlers.
 
 Also tool/application developers will have an universal API on events, where they can bind their application without any development cost.
 
@@ -31,18 +21,18 @@ It can be applied in all domains where event-driven automation based on GitHub m
 
 As example consider this use-case:
 
-- Release automation:
+  Release automation:
  * you can watch a specific issue beeing closed, cosmic-river server will notify the cosmic-river clients, which will perform custom actions.
 
  * consider  the https://github.com/kubernetes/kubernetes publish a new release, cosmic-river can trigger automatically the needed automation for making a new package for your distro, testing it with your tool
 
-- Testing, CI, Automation:
+  Testing, CI, Automation:
  * automation on  Pull-Requests, etc.
 
-- Event Notifications:
+  Event Notifications:
  * get notified with an Issue is closed, or any other particular event occurs.
 
-- Team Metrics/Events:
+  Team Metrics/Events:
  * you could trigger specific actions/workflows, or simply gather data thanks to specifics events
 
 ### Layout of repo:
