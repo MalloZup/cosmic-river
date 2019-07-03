@@ -36,6 +36,7 @@
                                (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))}))))  
 
 ;; we will need other functions for the other events.
+;; TODO implement multi-methods later
 (defn dispatch-all-repo-events []
   "dispatch only repository events"
   (doseq [repo-entry (criver/get-config-repo-events)] 
