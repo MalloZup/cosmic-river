@@ -9,31 +9,13 @@
            (:gen-class))
 
 
-;; TODO: remember that (from: https://developer.github.com/v3/activity/events/#list-issue-events-for-a-rep (:require [clojure.data.json :as json])ository)
-;; Only events created within the past 90 days will be included in timelines. Events older than 90 days will not be included (even if the total number of events in the timeline is less than 300).
-
-;; this will contain all different repository/events (uid) e-tag.
-;; we need this so we can fetch only events when e-tag change
-(def etag-cache (atom {}))
-
+;; get only last 90 days events.
 (defn get-repo-events [full-repo-name event exchange-name]
   "read from GitHub api v3 the repo events"
   (let [github-user (first (str/split full-repo-name #"/"))
         github-repo (last (str/split full-repo-name #"/"))
-        gh-token (criver/get-gh-token)
-        ;; uid used for storing the e-tag to atom
-        uid-etag  (keyword (str github-user "-" github-repo "-" event))
-        ;; if this hash changes, something on the repo is new/changed and we will send the new raw events.
-        etag-hash (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))]
-    (when (nil? etag-hash) (println "[DEBUG]: github rate-limit exceed"))
-    (when (= etag-hash (get-in @etag-cache [uid-etag])) 
-      (println "[DEBUG]:  etag-repository already present in cache")
-      (println "[DEBUG]: no new repository event found"))
-    ;; etag-hash is not present in atom-cache, we need to get events first then update atom with new et
-    (when (not= etag-hash (get-in @etag-cache [uid-etag]))
-      (msg-broker/publish-events {:type (get-in (criver/get-criver-config) [:message-broker :type]), :events (tentacles.events/repo-events github-user github-repo), :ex-name  exchange-name})
-      (swap! etag-cache merge { uid-etag 
-                               (:etag (tentacles.core/api-meta (tentacles.events/repo-events github-user github-repo {:oauth-token gh-token})))}))))  
+        gh-token (criver/get-gh-token)]
+      (msg-broker/publish-events {:type (get-in (criver/get-criver-config) [:message-broker :type]), :events (tentacles.events/repo-events github-user github-repo), :ex-name  exchange-name})))
 
 ;; we will need other functions for the other events.
 ;; TODO implement multi-methods later
