@@ -9,8 +9,12 @@
            (:gen-class))
 
 
+(defn get-issues-events []
+(println "pass")
+)
+
 ;; get only last 90 days events.
-(defn get-repo-events [full-repo-name event exchange-name]
+(defn get-repo-events [full-repo-name exchange-name]
   "read from GitHub api v3 the repo events"
   (let [github-user (first (str/split full-repo-name #"/"))
         github-repo (last (str/split full-repo-name #"/"))
@@ -26,8 +30,9 @@
       (when (= "repository" (str/lower-case event)) 
         ;; do things with only repo events
         (get-repo-events (:full-repo-name repo-entry) event (:exchange-name repo-entry)))  
-      (when (= "issue" (str/lower-case event))
+      (when (= "issues" (str/lower-case event))
         ;; do things with issue events of repository
+        (get-issues-events (:full-repo-name repo-entry) ) 
         (println "do issue stuff")))))
 
 
